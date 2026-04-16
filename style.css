@@ -1,59 +1,146 @@
-.drake-images {
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial;
+  color: white;
+  background: black;
+}
+
+/* ===== BACKGROUND FIX ===== */
+.bg {
   position: fixed;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  background:
+    url("https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1920&auto=format&fit=crop")
+    center/cover no-repeat;
   z-index: 0;
+  filter: brightness(0.4) contrast(1.2);
 }
 
+.vignette {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9));
+  z-index: 1;
+}
+
+/* ===== CAMERA ===== */
+.camera {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+iframe {
+  width: 360px;
+  height: 640px;
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 0 60px rgba(124,77,255,0.8);
+}
+
+/* ===== POEM ===== */
+.poem {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0.08;
+  z-index: 2;
+}
+
+/* ===== SIDE POEMS ===== */
+.side-poem {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  writing-mode: vertical-rl;
+  opacity: 0.05;
+  z-index: 2;
+}
+
+.left { left: 0; }
+.right { right: 0; transform: rotate(180deg); }
+
+/* ===== HIGHWAY ===== */
+.highway {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 35%;
+  z-index: 1;
+}
+
+.light {
+  position: absolute;
+  width: 5px;
+  height: 80px;
+  background: white;
+  opacity: 0.6;
+  filter: blur(4px);
+  animation: move 2s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translateY(100%); }
+  to { transform: translateY(-200%); }
+}
+
+/* ===== DRAKE IMAGES ===== */
 .drake-img {
   position: absolute;
-  width: 220px;
+  width: 200px;
   opacity: 0;
-  filter: grayscale(100%) contrast(120%);
+  border-radius: 12px;
 }
 
-/* Animations from different directions */
-.slide-left {
-  top: 20%;
-  animation: slideLeft 4s;
+/* ===== EFFECTS ===== */
+.flash {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  z-index: 10;
 }
 
-.slide-right {
-  bottom: 20%;
-  animation: slideRight 4s;
+.aura {
+  position: absolute;
+  width: 420px;
+  height: 720px;
+  background: radial-gradient(circle, rgba(124,77,255,0.5), transparent);
+  filter: blur(40px);
+  opacity: 0;
+  z-index: 4;
 }
 
-.slide-top {
-  left: 40%;
-  animation: slideTop 4s;
+.captions {
+  position: fixed;
+  bottom: 80px;
+  width: 100%;
+  text-align: center;
+  font-size: 26px;
+  opacity: 0;
+  z-index: 10;
 }
 
-.slide-bottom {
-  left: 50%;
-  animation: slideBottom 4s;
+/* SHAKE */
+.shake {
+  animation: shake 0.2s;
 }
 
-@keyframes slideLeft {
-  0% { left: -250px; opacity: 0; }
-  50% { left: 40px; opacity: 0.7; }
-  100% { left: -250px; opacity: 0; }
-}
-
-@keyframes slideRight {
-  0% { right: -250px; opacity: 0; }
-  50% { right: 40px; opacity: 0.7; }
-  100% { right: -250px; opacity: 0; }
-}
-
-@keyframes slideTop {
-  0% { top: -200px; opacity: 0; }
-  50% { top: 80px; opacity: 0.7; }
-  100% { top: -200px; opacity: 0; }
-}
-
-@keyframes slideBottom {
-  0% { bottom: -200px; opacity: 0; }
-  50% { bottom: 80px; opacity: 0.7; }
-  100% { bottom: -200px; opacity: 0; }
+@keyframes shake {
+  0% { transform: translate(0); }
+  50% { transform: translate(5px,-5px); }
+  100% { transform: translate(0); }
 }
