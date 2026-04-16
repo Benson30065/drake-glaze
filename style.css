@@ -1,12 +1,11 @@
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   color: white;
-  background: black;
 }
 
-/* ===== BACKGROUND ===== */
+/* BACKGROUND */
 .bg {
   position: fixed;
   width: 100%;
@@ -26,7 +25,7 @@ body {
   z-index: 1;
 }
 
-/* ===== CAMERA ===== */
+/* CAMERA */
 .camera {
   height: 100vh;
   display: flex;
@@ -34,7 +33,7 @@ body {
   align-items: center;
   position: relative;
   z-index: 5;
-  transition: transform 0.6s ease;
+  transition: transform 0.5s ease;
 }
 
 iframe {
@@ -42,34 +41,35 @@ iframe {
   height: 640px;
   border-radius: 18px;
   border: none;
-  box-shadow: 0 0 70px rgba(124,77,255,0.85);
+  box-shadow: 0 0 60px rgba(124,77,255,0.8);
 }
 
-/* ===== SIDE POEMS ===== */
+/* SIDE POEMS */
 .side-poem {
   position: fixed;
   top: 0;
   width: 22%;
   height: 100%;
   font-size: 15px;
-  line-height: 1.8;
-  opacity: 0.08;
+  opacity: 0.07;
   z-index: 2;
-  pointer-events: none;
+  line-height: 1.8;
 }
 
-.left {
-  left: 0;
-  padding-left: 20px;
+.left { left: 0; padding-left: 20px; }
+.right { right: 0; text-align: right; padding-right: 20px; }
+
+/* IMAGES FIXED */
+.images img {
+  position: absolute;
+  width: 180px;
+  opacity: 0;
+  border-radius: 12px;
+  transition: 0.3s;
+  z-index: 3;
 }
 
-.right {
-  right: 0;
-  text-align: right;
-  padding-right: 20px;
-}
-
-/* ===== FLASH ===== */
+/* FLASH */
 .flash {
   position: fixed;
   width: 100%;
@@ -79,7 +79,7 @@ iframe {
   z-index: 10;
 }
 
-/* ===== CAPTIONS ===== */
+/* CAPTIONS */
 .captions {
   position: fixed;
   bottom: 100px;
@@ -90,7 +90,7 @@ iframe {
   z-index: 10;
 }
 
-/* ===== CREDIT ===== */
+/* CREDIT */
 .credits {
   position: fixed;
   bottom: 10px;
@@ -101,13 +101,13 @@ iframe {
   z-index: 10;
 }
 
-/* ===== SHAKE EFFECT ===== */
+/* SHAKE */
 .shake {
   animation: shake 0.25s;
 }
 
 @keyframes shake {
   0% { transform: translate(0); }
-  50% { transform: translate(6px, -6px); }
+  50% { transform: translate(6px,-6px); }
   100% { transform: translate(0); }
 }
