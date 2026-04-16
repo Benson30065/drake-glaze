@@ -1,15 +1,12 @@
-/* ELEMENTS */
 const flash = document.querySelector(".flash");
-const video = document.getElementById("video");
 const aura = document.getElementById("aura");
 const captions = document.getElementById("captions");
-const highway = document.getElementById("highway");
+const camera = document.getElementById("camera");
 const images = document.querySelectorAll(".drake-img");
+const highway = document.getElementById("highway");
 
-/* =========================
-   HIGHWAY LIGHTS GENERATOR
-========================= */
-for (let i = 0; i < 20; i++) {
+/* ===== HIGHWAY LIGHTS ===== */
+for (let i = 0; i < 25; i++) {
   let light = document.createElement("div");
   light.className = "light";
   light.style.left = Math.random() * 100 + "%";
@@ -17,111 +14,67 @@ for (let i = 0; i < 20; i++) {
   highway.appendChild(light);
 }
 
-/* =========================
-   BEAT FLASH
-========================= */
-function beatFlash() {
-  flash.style.opacity = 0.25;
-
-  setTimeout(() => {
-    flash.style.opacity = 0;
-  }, 100);
-}
-
-/* =========================
-   SHAKE + AURA (VELOCITY)
-========================= */
-function beatHit(strong = false) {
-  document.body.classList.add("shake");
-
-  aura.style.opacity = strong ? 1 : 0.4;
-  aura.style.transform = strong ? "scale(1.3)" : "scale(1.1)";
-
-  setTimeout(() => {
-    document.body.classList.remove("shake");
-    aura.style.opacity = 0;
-    aura.style.transform = "scale(1)";
-  }, 200);
-}
-
-/* =========================
-   RANDOM IMAGE SLIDES
-========================= */
-function triggerImages() {
-  images.forEach(img => {
-    img.className = "drake-img";
-  });
-
-  let randomImg = images[Math.floor(Math.random() * images.length)];
-
-  const animations = ["slide-left", "slide-right", "slide-top", "slide-bottom"];
-  let randomAnim = animations[Math.floor(Math.random() * animations.length)];
-
-  randomImg.classList.add(randomAnim);
-}
-
-/* =========================
-   AUTO CAPTIONS (EDIT STYLE)
-========================= */
+/* ===== CAPTIONS ===== */
 const lines = [
   "STARTED FROM NOTHING",
   "NOW THE WORLD WATCHES",
-  "EVERY MOVE HITS DIFFERENT",
-  "LEGACY IN MOTION",
   "6 GOD ENERGY",
-  "RUN IT BACK",
-  "FEEL THE ENERGY"
+  "LEGACY IN MOTION",
+  "EVERY BEAT HITS DIFFERENT"
 ];
 
 let i = 0;
 
-function showCaption() {
+/* ===== CINEMATIC ZOOM ===== */
+function zoom(strong = false) {
+  camera.style.transform = strong ? "scale(1.08)" : "scale(1.03)";
+  camera.style.filter = strong ? "brightness(1.2)" : "brightness(1.05)";
+
+  setTimeout(() => {
+    camera.style.transform = "scale(1)";
+    camera.style.filter = "none";
+  }, 250);
+}
+
+/* ===== MAIN BEAT ===== */
+function beat(strong = false) {
+  flash.style.opacity = strong ? 0.4 : 0.2;
+
+  document.body.classList.add("shake");
+
+  aura.style.opacity = strong ? 1 : 0.4;
+
   captions.innerText = lines[i % lines.length];
   captions.style.opacity = 1;
 
-  setTimeout(() => {
-    captions.style.opacity = 0;
-  }, 400);
+  zoom(strong);
 
   i++;
+
+  setTimeout(() => {
+    flash.style.opacity = 0;
+    document.body.classList.remove("shake");
+    aura.style.opacity = 0;
+    captions.style.opacity = 0;
+  }, 200);
 }
 
-/* =========================
-   TIMING SYSTEM (EDIT FLOW)
-========================= */
+/* ===== IMAGE DROPS ===== */
+function imageDrop() {
+  let img = images[Math.floor(Math.random() * images.length)];
+  img.style.opacity = 1;
+  img.style.left = Math.random() * 70 + "%";
+  img.style.top = Math.random() * 70 + "%";
 
-/* Regular beats */
-setInterval(() => {
-  beatFlash();
-  beatHit(false);
-  showCaption();
-}, 800);
+  setTimeout(() => {
+    img.style.opacity = 0;
+  }, 900);
+}
 
-/* Drop hits (strong effects) */
-setInterval(() => {
-  beatHit(true);
-  triggerImages();
-}, 2400);
+/* ===== LOOPS ===== */
+setInterval(() => beat(false), 800);
+setInterval(() => beat(true), 2400);
+setInterval(imageDrop, 1300);
 
-/* =========================
-   USER INTERACTION
-========================= */
-
-/* Click = BIG beat drop */
-document.addEventListener("click", () => {
-  beatFlash();
-  beatHit(true);
-  triggerImages();
-});
-
-/* Mouse movement = glitch movement */
-document.addEventListener("mousemove", () => {
-  video.style.transform = `
-    translate(${Math.random()*4-2}px, ${Math.random()*4-2}px)
-  `;
-});
-
-/* Hover = aura pulse */
-document.addEventListener("mouseenter", () => {
-  aura.style.opacity = 0.3;
-});
+/* ===== INTERACTION ===== */
+document.addEventListener("click", () => beat(true));
