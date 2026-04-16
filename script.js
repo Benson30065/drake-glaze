@@ -1,19 +1,8 @@
 const flash = document.querySelector(".flash");
 const camera = document.getElementById("camera");
 const captions = document.getElementById("captions");
-const images = document.querySelectorAll(".drake-img");
-const highway = document.getElementById("highway");
+const iframe = document.getElementById("video");
 
-/* HIGHWAY LIGHTS */
-for (let i = 0; i < 25; i++) {
-  let light = document.createElement("div");
-  light.className = "light";
-  light.style.left = Math.random() * 100 + "%";
-  light.style.animationDuration = (Math.random() * 2 + 1) + "s";
-  highway.appendChild(light);
-}
-
-/* LINES */
 const lines = [
   "STARTED FROM NOTHING",
   "NOW IT FEELS CINEMATIC",
@@ -24,32 +13,15 @@ const lines = [
 
 let i = 0;
 
-/* CINEMATIC ZOOM ENGINE */
+/* ===== ZOOM SYSTEM ===== */
 function zoom(strong = false) {
-  if (strong) {
-    camera.style.transform = "scale(1.12)";
-  } else {
-    camera.style.transform = "scale(1.04)";
-  }
-
+  camera.style.transform = strong ? "scale(1.12)" : "scale(1.04)";
   setTimeout(() => {
     camera.style.transform = "scale(1)";
-  }, 500);
+  }, 450);
 }
 
-/* IMAGE DROP */
-function imageDrop() {
-  let img = images[Math.floor(Math.random() * images.length)];
-  img.style.opacity = 1;
-  img.style.left = Math.random() * 70 + "%";
-  img.style.top = Math.random() * 70 + "%";
-
-  setTimeout(() => {
-    img.style.opacity = 0;
-  }, 900);
-}
-
-/* MAIN BEAT */
+/* ===== BEAT SYSTEM ===== */
 function beat(strong = false) {
   flash.style.opacity = strong ? 0.35 : 0.15;
 
@@ -66,13 +38,23 @@ function beat(strong = false) {
     flash.style.opacity = 0;
     document.body.classList.remove("shake");
     captions.style.opacity = 0;
-  }, 200);
+  }, 220);
 }
 
-/* LOOPS */
+/* LOOP EFFECTS */
 setInterval(() => beat(false), 900);
-setInterval(() => beat(true), 2600);
-setInterval(imageDrop, 1200);
+setInterval(() => beat(true), 2400);
 
 /* CLICK BOOST */
 document.addEventListener("click", () => beat(true));
+
+/* ===== SONG SWITCH (NO API) ===== */
+/* After ~35 seconds switch to "Not You Too" */
+
+setTimeout(() => {
+  iframe.src = "https://www.youtube.com/embed/7E7tVQp7lGk?autoplay=1";
+  
+  flash.style.opacity = 0.4;
+  setTimeout(() => flash.style.opacity = 0, 200);
+
+}, 35000);
