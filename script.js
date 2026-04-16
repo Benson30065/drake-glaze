@@ -1,11 +1,10 @@
 const flash = document.querySelector(".flash");
-const aura = document.getElementById("aura");
-const captions = document.getElementById("captions");
 const camera = document.getElementById("camera");
+const captions = document.getElementById("captions");
 const images = document.querySelectorAll(".drake-img");
 const highway = document.getElementById("highway");
 
-/* ===== HIGHWAY LIGHTS ===== */
+/* HIGHWAY LIGHTS */
 for (let i = 0; i < 25; i++) {
   let light = document.createElement("div");
   light.className = "light";
@@ -14,52 +13,31 @@ for (let i = 0; i < 25; i++) {
   highway.appendChild(light);
 }
 
-/* ===== CAPTIONS ===== */
+/* LINES */
 const lines = [
   "STARTED FROM NOTHING",
-  "NOW THE WORLD WATCHES",
+  "NOW IT FEELS CINEMATIC",
   "6 GOD ENERGY",
   "LEGACY IN MOTION",
-  "EVERY BEAT HITS DIFFERENT"
+  "EVERY FRAME HITS DIFFERENT"
 ];
 
 let i = 0;
 
-/* ===== CINEMATIC ZOOM ===== */
+/* CINEMATIC ZOOM ENGINE */
 function zoom(strong = false) {
-  camera.style.transform = strong ? "scale(1.08)" : "scale(1.03)";
-  camera.style.filter = strong ? "brightness(1.2)" : "brightness(1.05)";
+  if (strong) {
+    camera.style.transform = "scale(1.12)";
+  } else {
+    camera.style.transform = "scale(1.04)";
+  }
 
   setTimeout(() => {
     camera.style.transform = "scale(1)";
-    camera.style.filter = "none";
-  }, 250);
+  }, 500);
 }
 
-/* ===== MAIN BEAT ===== */
-function beat(strong = false) {
-  flash.style.opacity = strong ? 0.4 : 0.2;
-
-  document.body.classList.add("shake");
-
-  aura.style.opacity = strong ? 1 : 0.4;
-
-  captions.innerText = lines[i % lines.length];
-  captions.style.opacity = 1;
-
-  zoom(strong);
-
-  i++;
-
-  setTimeout(() => {
-    flash.style.opacity = 0;
-    document.body.classList.remove("shake");
-    aura.style.opacity = 0;
-    captions.style.opacity = 0;
-  }, 200);
-}
-
-/* ===== IMAGE DROPS ===== */
+/* IMAGE DROP */
 function imageDrop() {
   let img = images[Math.floor(Math.random() * images.length)];
   img.style.opacity = 1;
@@ -71,10 +49,30 @@ function imageDrop() {
   }, 900);
 }
 
-/* ===== LOOPS ===== */
-setInterval(() => beat(false), 800);
-setInterval(() => beat(true), 2400);
-setInterval(imageDrop, 1300);
+/* MAIN BEAT */
+function beat(strong = false) {
+  flash.style.opacity = strong ? 0.35 : 0.15;
 
-/* ===== INTERACTION ===== */
+  document.body.classList.add("shake");
+
+  captions.innerText = lines[i % lines.length];
+  captions.style.opacity = 1;
+
+  zoom(strong);
+
+  i++;
+
+  setTimeout(() => {
+    flash.style.opacity = 0;
+    document.body.classList.remove("shake");
+    captions.style.opacity = 0;
+  }, 200);
+}
+
+/* LOOPS */
+setInterval(() => beat(false), 900);
+setInterval(() => beat(true), 2600);
+setInterval(imageDrop, 1200);
+
+/* CLICK BOOST */
 document.addEventListener("click", () => beat(true));
